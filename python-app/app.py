@@ -5,7 +5,6 @@ from flask import Flask
 from prometheus_flask_exporter import PrometheusMetrics
 
 
-
 app = Flask(__name__)
 metrics = PrometheusMetrics(app)
 
@@ -28,6 +27,14 @@ def new():
         + '<a id="fahrenheit">' +fahrenheit+ '</a>'
 
     )
+    # return 'OK'
+@app.route("/<int:celsius>")
+def fahrenheit_from(celsius):
+    """Convert Celsius to Fahrenheit degrees."""
+    fahrenheit = float(celsius) * 9 / 5 + 32
+    fahrenheit = round(fahrenheit, 3) 
+    return str(fahrenheit)
+
 
 @app.route('/metrics')
 @metrics.do_not_track()
@@ -51,26 +58,11 @@ def test():
 def oops():
     return ':(', 500
 
-
-@app.route("/<int:celsius>")
-def fahrenheit_from(celsius):
-    """Convert Celsius to Fahrenheit degrees."""
-    fahrenheit = float(celsius) * 9 / 5 + 32
-    fahrenheit = round(fahrenheit, 3) 
-    return str(fahrenheit)
-
-@app.route("/<string:script>")
-def run(script):
-    script=request.args.get("script", "")
-    return (
-	"""<h2> Run! 🕸 </h2>"""
-	"""<form action="" method="get">
-                <input type="text" name="script">
-                <input type="submit" value="Run">
-            </form>"""
-    + '<a id="script">' + script + '</a>'
-)
+@app.route('/skip')
+@metrics.do_not_track()
+def skip():
+    pass  # default metrics are not collected
 
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=8080, debug=True)
+    app.run('0.0.0.0', 8080)

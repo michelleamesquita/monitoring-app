@@ -10,5 +10,6 @@ http://localhost:9090/graph
 http://localhost:8080/metrics
 
 
-- Para rodar a aplicação 
+- Para rodar a aplicação
+`docker-compose up --build` 
 `docker-compose up -d`

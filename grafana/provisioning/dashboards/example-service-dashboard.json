@@ -15,7 +15,6 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 7,
   "links": [],
   "panels": [
     {
@@ -27,20 +26,7 @@
       "fieldConfig": {
         "defaults": {
           "custom": {},
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
+          "links": []
         },
         "overrides": []
       },
@@ -66,11 +52,8 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
       "percentage": false,
-      "pluginVersion": "7.0.0",
+      "pluginVersion": "7.1.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -80,10 +63,16 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(increase(http_request_duration_seconds_count[1m]))",
+          "expr": "sum(increase(flask_http_request_duration_seconds_count[1m]))",
           "interval": "",
           "legendFormat": "Requests per minute",
           "refId": "A"
+        },
+        {
+          "expr": "",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "B"
         }
       ],
       "thresholds": [],
@@ -106,6 +95,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:48",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -114,6 +104,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:49",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -136,20 +127,7 @@
       "fieldConfig": {
         "defaults": {
           "custom": {},
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
+          "links": []
         },
         "overrides": []
       },
@@ -175,11 +153,8 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
       "percentage": false,
-      "pluginVersion": "7.0.0",
+      "pluginVersion": "7.1.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -189,10 +164,16 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(increase(http_request_duration_seconds_count{code=~\"5.*\"}[1m]))",
+          "expr": "sum(increase(flask_http_request_duration_seconds_count{status=\"500\"}[10m]))",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
+        },
+        {
+          "expr": "",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "B"
         }
       ],
       "thresholds": [],
@@ -215,6 +196,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:99",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -223,6 +205,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:100",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -245,7 +228,8 @@
       "description": "",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "links": []
         },
         "overrides": []
       },
@@ -271,10 +255,8 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
       "percentage": false,
+      "pluginVersion": "7.1.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -284,19 +266,19 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "histogram_quantile(0.9, sum(rate(http_request_duration_seconds_bucket[10m])) by (le, route))",
+          "expr": "histogram_quantile(0.9, sum(rate(flask_http_request_duration_seconds_bucket[10m])) by (le, route))",
           "interval": "",
           "legendFormat": "p90 {{route}}",
           "refId": "A"
         },
         {
-          "expr": "histogram_quantile(0.5, sum(rate(http_request_duration_seconds_bucket[10m])) by (le, route))",
+          "expr": "histogram_quantile(0.5, sum(rate(flask_http_request_duration_seconds_bucket[10m])) by (le, route)) ",
           "interval": "",
           "legendFormat": "Median {{route}}",
           "refId": "B"
         },
         {
-          "expr": "rate(http_request_duration_seconds_sum[5m]) / rate(http_request_duration_seconds_count[5m])",
+          "expr": " rate(http_request_duration_seconds_sum[5m]) / rate(flask_http_request_duration_seconds_count[5m])",
           "interval": "",
           "legendFormat": "Average {{route}}",
           "refId": "C"
@@ -322,6 +304,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:201",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -330,6 +313,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:202",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -345,7 +329,7 @@
     }
   ],
   "refresh": false,
-  "schemaVersion": 25,
+  "schemaVersion": 26,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -371,5 +355,5 @@
   "timezone": "",
   "title": "Example Service Dashboard",
   "uid": "1DYaynomMk",
-  "version": 2
+  "version": 1
 }
